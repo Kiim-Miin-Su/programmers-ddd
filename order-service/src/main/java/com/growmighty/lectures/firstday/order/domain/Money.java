@@ -1,4 +1,10 @@
+<<<<<<<< HEAD:order-service/src/main/java/com/growmighty/lectures/firstday/order/domain/Money.java
 package com.growmighty.lectures.firstday.order.domain;
+|||||||| parent of f914e54 (Step4: 도메인별 DDD 4계층 분리 + DIP 적용):src/main/java/com/growmighty/lectures/firstday/tangledmonolith/order/Money.java
+package com.growmighty.lectures.firstday.tangledmonolith.order;
+========
+package com.growmighty.lectures.firstday.tangledmonolith.order.domain;
+>>>>>>>> f914e54 (Step4: 도메인별 DDD 4계층 분리 + DIP 적용):src/main/java/com/growmighty/lectures/firstday/tangledmonolith/order/domain/Money.java
 
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
