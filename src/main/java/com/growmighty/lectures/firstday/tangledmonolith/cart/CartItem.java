@@ -1,7 +1,6 @@
 package com.growmighty.lectures.firstday.tangledmonolith.cart;
 
 
-import com.growmighty.lectures.firstday.tangledmonolith.product.Product;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -12,29 +11,29 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CartItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "cart_id")
+	private Cart cart;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id")
+	private Long productId;
 
-    @Column(nullable = false)
-    private Integer quantity;
+	@Column(nullable = false)
+	private Integer quantity;
 
-    public static CartItem create(Product product, int quantity) {
-        CartItem cartItem = new CartItem();
-        cartItem.product = product;
-        cartItem.quantity = quantity;
-        return cartItem;
-    }
+	public static CartItem create(long productId, int quantity) { // Product 객체를 제거해 결합도 낮춤; compile 단계에서 결합 제외
+		CartItem cartItem = new CartItem();
+		cartItem.productId = productId;
+		cartItem.quantity = quantity;
+		return cartItem;
+	}
 
-    void assignCart(Cart cart) {
-        this.cart = cart;
-    }
+	void assignCart(Cart cart) {
+		this.cart = cart;
+	}
 }
