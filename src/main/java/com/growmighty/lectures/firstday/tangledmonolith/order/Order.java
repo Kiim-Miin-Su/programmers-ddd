@@ -1,7 +1,5 @@
 package com.growmighty.lectures.firstday.tangledmonolith.order;
 
-import com.growmighty.lectures.firstday.tangledmonolith.payment.Payment;
-import com.growmighty.lectures.firstday.tangledmonolith.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,52 +15,50 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id")
-    private User user;
+	@Column(nullable = false)
+	private Long userId; // User reference removed
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
-    private List<OrderItem> items = new ArrayList<>();
+	@OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+	private List<OrderItem> items = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
-    
-    @Setter
-    @Column(nullable = false)
-    private BigDecimal totalAmount;
+	@Column(nullable = false)
+	private Long paymentId; // Payment reference removed
 
-    @Setter
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private OrderStatus status;
+	@Setter
+	@Column(nullable = false)
+	private BigDecimal totalAmount;
 
-    public static Order create(User user, List<OrderItem> items) {
-        Order order = new Order();
-        order.user = user;
-        order.status = OrderStatus.CREATED;
-        order.totalAmount = BigDecimal.ZERO;
+	@Setter
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private OrderStatus status;
 
-        for (OrderItem item : items) {
-            order.addOrderItem(item);
-        }
+	public static Order create(long userId, List<OrderItem> items) {
+		Order order = new Order();
+		order.userId = userId;
+		order.status = OrderStatus.CREATED;
+		order.totalAmount = BigDecimal.ZERO;
 
-        return order;
-    }
+		for (OrderItem item : items) {
+			order.addOrderItem(item);
+		}
 
-    public void assignPayment(Payment payment) {
-        this.payment = payment;
-    }
+		return order;
+	}
 
-    private void addOrderItem(OrderItem item) {
-        this.items.add(item);
+	public void assignPayment(Long paymentId) {
+		this.paymentId = paymentId;
+	}
 
-        if (item.getOrder() != this) {
-            item.assignOrder(this);
-        }
-    }
+	private void addOrderItem(OrderItem item) {
+		this.items.add(item);
+
+		if (item.getOrder() != this) {
+			item.assignOrder(this);
+		}
+	}
 }
