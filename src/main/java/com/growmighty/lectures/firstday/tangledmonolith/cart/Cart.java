@@ -23,6 +23,7 @@ public class Cart {
 
 	//	@OneToOne(fetch = FetchType.LAZY)
 //	@JoinColumn(name = "user_id")
+	@Column(nullable = false)
 	private Long userId;
 
 	/**
