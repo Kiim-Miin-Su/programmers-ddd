@@ -33,7 +33,7 @@ public class OrderItem {
 	@Column(nullable = false)
 	private Integer quantity;
 
-	public static OrderItem create(long productId, int quantity, String productNameSnapshot, BigDecimal priceSnapshot) {
+	public static OrderItem create(Long productId, int quantity, String productNameSnapshot, BigDecimal priceSnapshot) {
 		OrderItem orderItem = new OrderItem();
 
 		orderItem.productId = productId;

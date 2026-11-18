@@ -25,7 +25,7 @@ public class CartItem {
 	@Column(nullable = false)
 	private Integer quantity;
 
-	public static CartItem create(long productId, int quantity) { // Product 객체를 제거해 결합도 낮춤; compile 단계에서 결합 제외
+	public static CartItem create(Long productId, int quantity) { // Product 객체를 제거해 결합도 낮춤; compile 단계에서 결합 제외
 		CartItem cartItem = new CartItem();
 		cartItem.productId = productId;
 		cartItem.quantity = quantity;

@@ -10,28 +10,28 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+	@Column(nullable = false, unique = true)
+	private String email;
 
-    @Column(nullable = false)
-    private String password;
+	@Column(nullable = false)
+	private String password;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
 
-    @Column(nullable = false)
-    private String phoneNumber;
+	@Column(nullable = false)
+	private String phoneNumber;
 
-    public static User register(String email, String encodedPassword, String name, String phoneNumber) {
-        User user = new User();
-        user.email = email;
-        user.password = encodedPassword;
-        user.name = name;
-        user.phoneNumber = phoneNumber;
-        return user;
-    }
+	public static User register(String email, String encodedPassword, String name, String phoneNumber) {
+		User user = new User();
+		user.email = email;
+		user.password = encodedPassword;
+		user.name = name;
+		user.phoneNumber = phoneNumber;
+		return user;
+	}
 }

@@ -32,7 +32,7 @@ public class Cart {
 	 * @param userId 회원 간의 연결을 userId로 이어 약한 결합 유도
 	 * @return userId를 포함한 Cart 객체
 	 */
-	public static Cart create(long userId) { // User 객체를 받게 되면 compile 시에 의존성이 생겨버림
+	public static Cart create(Long userId) { // User 객체를 받게 되면 compile 시에 의존성이 생겨버림
 		Cart cart = new Cart();
 //		cart.userId = user.getId();
 //		클라이언트가 보낸 요청을 인증 정보에서 가져올 필요 있음. by GPT
@@ -43,6 +43,7 @@ public class Cart {
 
 	/**
 	 * 추후 item 검증 로직을 여기에 구현합니다. 애그리거트 루트
+	 *
 	 * @param item 추가할 item
 	 */
 	public void addItem(CartItem item) {

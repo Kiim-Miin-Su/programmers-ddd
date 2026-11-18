@@ -33,7 +33,7 @@ public class Product {
 	@Lob
 	private String description;
 
-	public static Product create(long sellerId, String name, BigDecimal price, Integer stockQuantity, String description) {
+	public static Product create(Long sellerId, String name, BigDecimal price, Integer stockQuantity, String description) {
 		Product product = new Product();
 		product.sellerId = sellerId;
 		product.name = name;

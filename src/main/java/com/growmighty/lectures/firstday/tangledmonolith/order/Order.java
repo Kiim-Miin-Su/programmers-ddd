@@ -37,7 +37,7 @@ public class Order {
 	@Column(nullable = false)
 	private OrderStatus status;
 
-	public static Order create(long userId, List<OrderItem> items) {
+	public static Order create(Long userId, List<OrderItem> items) {
 		Order order = new Order();
 		order.userId = userId;
 		order.status = OrderStatus.CREATED;
