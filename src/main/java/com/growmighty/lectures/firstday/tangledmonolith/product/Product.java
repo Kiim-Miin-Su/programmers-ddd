@@ -23,7 +23,7 @@ public class Product {
 	private String name;
 
 	@Column(nullable = false)
-	private BigDecimal price;
+	private BigDecimal price = BigDecimal.ZERO;
 
 	@Column(nullable = false)
 	private Integer stockQuantity;
