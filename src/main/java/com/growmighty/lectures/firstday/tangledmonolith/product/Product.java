@@ -1,6 +1,5 @@
 package com.growmighty.lectures.firstday.tangledmonolith.product;
 
-import com.growmighty.lectures.firstday.tangledmonolith.seller.Seller;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,7 +24,7 @@ public class Product {
 	private String name;
 
 	@Column(nullable = false)
-	private BigDecimal price;
+	private BigDecimal price = BigDecimal.ZERO;
 
 	@Setter
 	@Column(nullable = false)

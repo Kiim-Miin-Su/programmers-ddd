@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "order_items")
 @Getter
@@ -26,12 +28,12 @@ public class OrderItem {
 	private String productNameSnapshot; // snapshot added
 
 	@Column(nullable = false)
-	private int priceSnapshot; // snapshot added
+	private BigDecimal priceSnapshot = BigDecimal.ZERO; // snapshot added
 
 	@Column(nullable = false)
 	private Integer quantity;
 
-	public static OrderItem create(long productId, int quantity, String productNameSnapshot, int priceSnapshot) {
+	public static OrderItem create(long productId, int quantity, String productNameSnapshot, BigDecimal priceSnapshot) {
 		OrderItem orderItem = new OrderItem();
 
 		orderItem.productId = productId;
