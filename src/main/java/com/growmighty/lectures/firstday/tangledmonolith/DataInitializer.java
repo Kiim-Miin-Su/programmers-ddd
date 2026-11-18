@@ -31,7 +31,7 @@ public class DataInitializer implements CommandLineRunner {
         User sellerOwner = userRepository.save(
                 User.register("seller@growmighty.co.kr", "encoded-pw", "판매자", "010-2222-2222"));
 
-        Seller seller = sellerRepository.save(Seller.create(sellerOwner));
+        Seller seller = sellerRepository.save(Seller.create(sellerOwner.getId()));
 
         Product chair = productRepository.save(
                 Product.create(seller, "Dofia 이동식 접이식 식탁 의자 4개 세트", BigDecimal.valueOf(179000), 10, "가정용 소형주택 신축식"));

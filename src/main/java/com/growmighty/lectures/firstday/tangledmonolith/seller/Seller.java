@@ -3,6 +3,7 @@ package com.growmighty.lectures.firstday.tangledmonolith.seller;
 import com.growmighty.lectures.firstday.tangledmonolith.product.Product;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "sellers")
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Seller {
 	@Id
