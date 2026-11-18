@@ -16,11 +16,14 @@ public class Seller {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@OneToMany(mappedBy = "seller")
-	private List<Product> products = new ArrayList<>();
+	/*
+	양방향 참조 끊어내기; product가 seller_id를 가짐으로써 join이 가능합니다.
+	 */
+//	@OneToMany(mappedBy = "seller")
+//	private List<Product> products = new ArrayList<>();
 
 	@Column(nullable = false)
-	private Long userId;
+	private Long userId; // User reference removed
 
 	public static Seller create(long userId) {
 		Seller seller = new Seller();
