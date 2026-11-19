@@ -2,6 +2,7 @@ package com.growmighty.lectures.firstday.tangledmonolith.homework;
 
 import com.growmighty.lectures.firstday.tangledmonolith.payment.Payment;
 import com.growmighty.lectures.firstday.tangledmonolith.payment.PaymentStatus;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * [과제 DDD-2] 결제의 상태 전이와 승인 후 상태 변경 금지를 검증합니다.
  */
 class PaymentStatusTest {
+
+
 
 	@Test
 	@DisplayName("준비(READY) 상태의 결제를 승인하면 PAID 가 된다")
