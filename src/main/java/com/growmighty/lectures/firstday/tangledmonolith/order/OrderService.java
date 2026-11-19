@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +35,7 @@ public class OrderService {
 
         Order order = Order.create(user.getId(), orderItems);
 
-        Payment payment = paymentService.pay(order.getTotalAmount().getValue());
+        Payment payment = paymentService.create(order.getTotalAmount().getValue());
         order.completePayment(payment.getId());
 
         Order savedOrder = orderRepository.save(order);
