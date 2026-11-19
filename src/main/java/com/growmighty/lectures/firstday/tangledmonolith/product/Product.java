@@ -49,9 +49,10 @@ public class Product {
 		if (this.stockQuantity < quantity) {
 			throw new IllegalStateException("재고가 부족합니다. product=" + this.name);
 		}
-		if (this.stockQuantity - quantity <= 0) {
-			// Checklist02: 0이하 수량 거부
-			throw new IllegalArgumentException("Quantity must be greater than zero"); // 자신의 존재에 관한 규칙이므로 Entity에 두는 것이 적합.
+
+		// Checklist02: 0이하 수량 거부
+		if (quantity <= 0) {
+			throw new IllegalArgumentException("입력 값은 0보다 커야합니다.");
 		}
 
 		this.stockQuantity = (this.stockQuantity - quantity);
