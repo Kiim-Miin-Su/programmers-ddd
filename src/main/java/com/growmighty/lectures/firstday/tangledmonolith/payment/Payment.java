@@ -34,6 +34,7 @@ public class Payment {
 		if (!this.status.canTransitionTo(next)) { // READY인지 검사 -> next == PAID || next == FAILED 검사
 			throw new IllegalStateException("결제 상태는 READY에서만 전이가 가능합니다: %s -> %s".formatted(this.status, next));
 		}
+		this.status = next;
 	}
 
 //    public void changeStatus(PaymentStatus status) {
