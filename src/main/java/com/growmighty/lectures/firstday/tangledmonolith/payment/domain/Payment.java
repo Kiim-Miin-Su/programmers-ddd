@@ -63,4 +63,11 @@ public class Payment {
     public boolean isPaid() {
         return this.status == PaymentStatus.PAID;
     }
+
+    public void transitionTo(PaymentStatus next) {
+        if (!this.status.canTransitionTo(next)) {
+            throw new IllegalStateException("유효하지 않은 결제 상태 전이입니다: " + this.status + " -> " + next);
+        }
+        this.status = next;
+    }
 }
