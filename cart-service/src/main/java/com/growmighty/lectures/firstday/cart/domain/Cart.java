@@ -52,11 +52,13 @@ public class Cart {
     }
 
     public void removeItem(Long productId) {
-        requireItem(productId);
-        this.items.removeIf(item -> item.hasProduct(productId));
+        CartItem item = requireItem(productId);
+        this.items.remove(item);
+        item.assignCart(null);
     }
 
     public void clear() {
+        this.items.forEach(item -> item.assignCart(null));
         this.items.clear();
     }
 
