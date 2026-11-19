@@ -28,7 +28,7 @@
   - 없는 상품의 수량 변경 · 삭제는 예외
 - [x] `Product.decreaseStock` 에 0 이하 수량 거부 추가
 - [x] `Payment.changeStatus` 를 없애고 `approve()` / `fail()` — READY 에서만 전이 가능
-- [ ] `DataInitializer`, `PaymentService` 를 새 메서드로 수정
+- [x] `DataInitializer`, `PaymentService` 를 새 메서드로 수정
 
 **필수 — 규칙을 테스트로 증명**
 
