@@ -84,7 +84,7 @@ public class Cart {
 		this.items.clear();
 	}
 
-	private Optional<CartItem> findItem(Long productId) {
+	public Optional<CartItem> findItem(Long productId) {
 		return items.stream().filter(item -> item.hasProduct(productId)).findFirst();
 	}
 
