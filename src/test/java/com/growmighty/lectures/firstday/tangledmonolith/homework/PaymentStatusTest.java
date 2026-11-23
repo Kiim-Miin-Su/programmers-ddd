@@ -1,7 +1,7 @@
 package com.growmighty.lectures.firstday.tangledmonolith.homework;
 
-import com.growmighty.lectures.firstday.tangledmonolith.payment.Payment;
-import com.growmighty.lectures.firstday.tangledmonolith.payment.PaymentStatus;
+import com.growmighty.lectures.firstday.tangledmonolith.payment.domain.Payment;
+import com.growmighty.lectures.firstday.tangledmonolith.payment.domain.PaymentStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

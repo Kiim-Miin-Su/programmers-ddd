@@ -1,7 +1,6 @@
 package com.growmighty.lectures.firstday.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.growmighty.lectures.firstday.tangledmonolith.common.exception.ErrorCode;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record ApiResponse<T>(boolean success, T data, ApiError error) {
@@ -18,6 +17,6 @@ public record ApiResponse<T>(boolean success, T data, ApiError error) {
 		return new ApiResponse<>(false, null, error);
 	}
 
-	public record ApiError(ErrorCode error, String message) {
+	public record ApiError(String error, String message) {
 	}
 }
