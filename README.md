@@ -1,60 +1,61 @@
-# 📝 과제 HW02 — 장바구니 애그리거트 + 불변식 단위 테스트
+# 📝 과제 HW03 — 6개 도메인 4계층 + DIP + 공통 응답
 
 | 항목 | 내용 |
 | --- | --- |
-| 마감 | **11/19 (목) 13:30** |
-| 유형 | 복습 · 예상 2.5시간 |
-| 시작 브랜치 | `homework/ddd-2` (이 브랜치) |
-| 정답 예시 | `homework/ddd-2-solution` |
-| 이어지는 수업 | Day 2 · DDD ② 전술적 설계 (11/18) |
+| 마감 | **11/20 (금) 13:30** |
+| 유형 | 복습 · 예상 3시간 |
+| 시작 브랜치 | `homework/ddd-3` (이 브랜치) |
+| 정답 예시 | `lectures/ddd/step4-done` |
+| 이어지는 수업 | Day 3 · DDD ③ 4계층 (11/19) |
 
 ## 왜 하나요?
 
-수업에서는 **주문** 애그리거트를 다듬었습니다. 장바구니·상품·결제에는 아직 "밖에서 마음대로 바꿀 수 있는" 구멍이 남아 있습니다.
+수업에서 **주문** 도메인을 4계층으로 나눴습니다. 나머지 5개 도메인도 같은 구조로 나누고,
+모든 API 의 응답 모양을 하나로 통일합니다. 이 구조가 다음 주 MSA 분리의 밑바탕입니다.
 
-| 지금 코드 | 문제 |
-| --- | --- |
-| `cart.addItem(CartItem.create(productId, qty))` | 밖에서 만든 항목을 그대로 넣는다 → 같은 상품이 두 줄, 수량 0 도 들어간다 |
-| `product.decreaseStock(-3)` | 음수를 넣으면 재고가 **늘어난다** |
-| `payment.changeStatus(아무 상태)` | PAID 된 결제를 FAILED 로 되돌릴 수 있다 |
+```
+<domain>/
+├── presentation/   ← Controller, 요청·응답 DTO
+├── application/    ← 유스케이스 서비스, 커맨드·결과 DTO
+├── domain/         ← Entity, VO, Repository 인터페이스  (스프링·웹 import 금지)
+└── infrastructure/ ← JPA 구현 (*JpaRepository, *RepositoryAdapter)
+```
 
 ## 할 일
 
-**필수 — 규칙을 Entity 안으로**
+**필수**
 
-- [x] `Cart` 를 애그리거트 루트로: `cart.addItem(productId, quantity)`, `changeQuantity(productId, n)`, `removeItem(productId)` — 항목은 Cart 가 직접 만든다
-  - 수량은 1 이상
-  - 같은 상품을 다시 담으면 **수량 합산**
-  - 없는 상품의 수량 변경 · 삭제는 예외
-- [x] `Product.decreaseStock` 에 0 이하 수량 거부 추가
-- [x] `Payment.changeStatus` 를 없애고 `approve()` / `fail()` — READY 에서만 전이 가능
-- [x] `DataInitializer`, `PaymentService` 를 새 메서드로 수정
-
-**필수 — 규칙을 테스트로 증명**
-
-`src/test/java/.../homework/` 의 테스트 뼈대 3개(`CartAggregateTest`, `ProductStockTest`, `PaymentStatusTest`)는 이름과 given/when/then 주석만 있고
-`fail("TODO")` 로 실패합니다. `fail` 을 지우고 본문을 채우세요. **스프링 없이** 도는 순수 단위 테스트여야 합니다.
+- [ ] cart · order · payment · product · seller · user **6개 모두** 4계층으로 (주문은 수업 코드를 이어서)
+- [ ] 각 도메인의 `Repository` 는 domain 에 인터페이스, infrastructure 에 구현 (**DIP**)
+- [ ] 도메인 루트 패키지에 계층 밖으로 남은 클래스 0개
+- [ ] `common/response/ApiResponse<T>` — `{ "success": true, "data": … }` / `{ "success": false, "error": { "code", "message" } }`
+- [ ] 모든 컨트롤러 메서드가 `ApiResponse` 를 반환
+- [ ] `common/exception/GlobalExceptionHandler` (`@RestControllerAdvice`) 로 예외 → 실패 응답 변환
 
 **도전**
 
-- [ ] 한 장바구니에 담을 수 있는 상품 종류 상한(예: 50종) 규칙 추가 + 테스트
-- [ ] "이 규칙은 Entity 에 둘까, Domain Service 에 둘까?" 판단 근거를 PR 본문에 3줄로
+- [ ] 정답 브랜치의 `OrderServiceTest`, `OrderControllerTest` 를 가져와 본인 코드에서 통과시키기
 
-## 완료 기준
+## 완료 기준 — 검증 테스트
 
 ```bash
-./gradlew test     # homework 테스트 12개 + 기존 테스트 모두 통과
+./gradlew test --tests '*homework*'
 ```
 
-테스트 이름만 읽어도 규칙이 보이면 좋은 테스트입니다 (예: `같은_상품을_담으면_수량이_합쳐진다`).
+| 테스트 | 검사 내용 |
+| --- | --- |
+| `LayeredArchitectureTest` | 6개 도메인 × 4계층 패키지 존재, 계층 밖 클래스 0개, domain 계층의 금지 import(스프링·서블릿·다른 계층) 0개 |
+| `ApiResponseConventionTest` | `ApiResponse` 클래스 존재, 모든 `@RestController` 메서드가 `ApiResponse` 반환, `@RestControllerAdvice` 존재 |
+
+ArchUnit 같은 라이브러리 없이, 소스 코드와 리플렉션으로 검사합니다. 실패 메시지에 고쳐야 할 파일 목록이 나옵니다.
 
 ## 제출 방법
 
-1. 이 레포를 **fork** 하고, 본인 fork 에서 이 브랜치를 기준으로 `hw/ddd-2` 브랜치를 만듭니다.
+1. 이 레포를 **fork** 하고, 본인 fork 에서 이 브랜치를 기준으로 `hw/ddd-3` 브랜치를 만듭니다.
    ```bash
-   git fetch upstream && git checkout -b hw/ddd-2 upstream/homework/ddd-2
+   git fetch upstream && git checkout -b hw/ddd-3 upstream/homework/ddd-3
    ```
-2. **마감(11/19 (목) 13:30) 전까지** 본인 fork 의 브랜치(또는 PR) 링크를 과제 제출 채널에 올립니다.
+2. **마감(11/20 (금) 13:30) 전까지** 본인 fork 의 브랜치(또는 PR) 링크를 과제 제출 채널에 올립니다.
 3. 14:00 수업은 **과제 리뷰 15분**으로 시작합니다. 2~3명의 코드를 정답 브랜치와 나란히 비교합니다.
 
-> 막히면 정답 브랜치 `homework/ddd-2-solution` 와 `git diff` 로 비교해 봐도 됩니다. 단, **왜 그렇게 바뀌었는지 설명할 수 있어야** 합니다.
+> 막히면 정답 브랜치 `lectures/ddd/step4-done` 와 `git diff` 로 비교해 봐도 됩니다. 단, **왜 그렇게 바뀌었는지 설명할 수 있어야** 합니다.
