@@ -81,12 +81,12 @@ class CartAggregateTest {
 		Cart cart = Cart.create(1L);
 		cart.addItem(2L, 2);
 		cart.addItem(3L, 1);
-		CartItem removedItem = cart.getItems().get(0);
+		CartItem removedItem = cart.findItem(2L).orElseThrow();
 
 		cart.removeItem(2L);
 
 		assertEquals(1, cart.getItems().size());
-		assertTrue(cart.getItems().stream().noneMatch(item -> item.getProductId().equals(2L)));
+		assertTrue(cart.findItem(2L).isEmpty());
 		assertEquals(3L, cart.getItems().get(0).getProductId());
 		assertSame(cart, cart.getItems().get(0).getCart());
 		assertNull(removedItem.getCart());

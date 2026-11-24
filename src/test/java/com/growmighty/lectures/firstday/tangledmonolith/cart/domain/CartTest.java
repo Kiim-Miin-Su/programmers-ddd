@@ -74,6 +74,33 @@ class CartTest {
     }
 
     @Test
+    @DisplayName("상품 종류가 최대치여도 기존 상품의 수량은 늘릴 수 있다")
+    void addItem_atMaxDistinct_mergesExistingProduct() {
+        Cart cart = Cart.create(1L);
+        for (long productId = 1; productId <= Cart.MAX_DISTINCT_ITEMS; productId++) {
+            cart.addItem(productId, 1);
+        }
+
+        cart.addItem(1L, 2);
+
+        assertThat(cart.getItems()).hasSize(Cart.MAX_DISTINCT_ITEMS);
+        assertThat(cart.findItem(1L).orElseThrow().getQuantity()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("기존 상품에도 0 이하의 수량을 추가할 수 없다")
+    void addItem_nonpositiveAdditionalQuantity_throws() {
+        Cart cart = Cart.create(1L);
+        cart.addItem(1L, 2);
+
+        for (int quantity : new int[]{0, -1}) {
+            assertThatThrownBy(() -> cart.addItem(1L, quantity))
+                    .isInstanceOf(IllegalArgumentException.class);
+            assertThat(cart.findItem(1L).orElseThrow().getQuantity()).isEqualTo(2);
+        }
+    }
+
+    @Test
     @DisplayName("장바구니를 비우면 모든 항목이 제거된다")
     void clear_removesAll() {
         Cart cart = Cart.create(1L);
