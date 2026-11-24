@@ -65,9 +65,7 @@ public class Payment {
     }
 
     public void transitionTo(PaymentStatus next) {
-        if (!this.status.canTransitionTo(next)) {
-            throw new IllegalStateException("유효하지 않은 결제 상태 전이입니다: " + this.status + " -> " + next);
-        }
+        if (!this.status.canTransitionTo(next)) throw new IllegalStateException("유효하지 않은 결제요청입니다.");
         this.status = next;
     }
 }
