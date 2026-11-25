@@ -28,4 +28,9 @@ public class UserController {
     public ApiResponse<UserResponse> getUser(@PathVariable Long userId) {
         return ApiResponse.ok(UserResponse.from(userService.getUser(userId)));
     }
+
+    @GetMapping("/health")
+    public ApiResponse<Void> health() {
+        return ApiResponse.ok();
+    }
 }
