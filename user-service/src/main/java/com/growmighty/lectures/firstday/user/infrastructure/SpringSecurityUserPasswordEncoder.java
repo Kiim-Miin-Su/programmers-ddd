@@ -1,15 +1,12 @@
-package com.growmighty.lectures.firstday.tangledmonolith.user.infrastructure;
+package com.growmighty.lectures.firstday.user.infrastructure;
 
-import com.growmighty.lectures.firstday.tangledmonolith.user.application.PasswordEncoder;
+import com.growmighty.lectures.firstday.user.application.PasswordEncoder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HexFormat;
-
 @Component
-public class Sha256PasswordEncoder implements PasswordEncoder {
+public class SpringSecurityPasswordEncoder implements PasswordEncoder {
+    /*
     @Override
     public String encode(String rawPassword) {
         try {
@@ -25,4 +22,11 @@ public class Sha256PasswordEncoder implements PasswordEncoder {
     public boolean matches(String rawPassword, String encodedPassword) {
         return encode(rawPassword).equals(encodedPassword);
     }
+     */
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new SpringSecurityPasswordEncoder();
+    }
+
 }

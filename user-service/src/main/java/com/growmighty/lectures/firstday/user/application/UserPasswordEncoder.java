@@ -1,4 +1,4 @@
-package com.growmighty.lectures.firstday.tangledmonolith.user.application;
+package com.growmighty.lectures.firstday.user.application;
 
 public interface PasswordEncoder {
     String encode(String rawPassword);
