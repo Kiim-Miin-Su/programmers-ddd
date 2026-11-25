@@ -30,7 +30,7 @@ public class ProductHttpClient implements ProductPort {
         if (body == null) {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "product not exists: %s".formatted(productId));
         }
-        
+
         ProductApiData data = body.data();
         return new ProductSnapshot(
             data.id(),
@@ -46,7 +46,7 @@ public class ProductHttpClient implements ProductPort {
             .uri("/products/{productId}/decrease-stock", productId)
             .contentType(MediaType.APPLICATION_JSON)
             .body(new StockChangeBody(quantity))
-            .retrieve()
+            .retrieve() // TODO: 만약에 상품이 부족하면 어떡해?
             .toBodilessEntity();
     }
 

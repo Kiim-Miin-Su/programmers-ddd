@@ -45,11 +45,11 @@ public class OrderService {
             ProductSnapshot product = this.productHttpClient.getProduct(line.productId());
 
             if (!product.orderable())
-                throw new NotOrderableException();
+                throw new NotOrderableException(line.productId());
 
-            orderItems.add(OrderItem.create(product.name(), product.price(), product.id(), line.quantity()));
+            orderItems.add(OrderItem.create(product.name(), product.price(), product.productId(), line.quantity()));
 
-            productService.decreaseStock(line.productId(), line.quantity());
+            productHttpClient.decreaseStock(line.productId(), line.quantity());
         }
 
         Order order = Order.create(userInfo.id(), orderItems);

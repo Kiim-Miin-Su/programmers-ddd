@@ -53,7 +53,7 @@ public class Product {
         return new Product(sellerId, name, price, stockQuantity, description);
     }
 
-    public void decreaseStock(int quantity) {
+    public boolean decreaseStock(int quantity) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("차감 수량은 1개 이상이어야 합니다.");
         }
@@ -62,12 +62,14 @@ public class Product {
         }
         if (this.stockQuantity < quantity) {
             throw new IllegalStateException(
-                    "재고가 부족합니다. product=" + this.name + ", 재고=" + this.stockQuantity + ", 요청=" + quantity);
+                "재고가 부족합니다. product=" + this.name + ", 재고=" + this.stockQuantity + ", 요청=" + quantity);
         }
         this.stockQuantity -= quantity;
+
         if (this.stockQuantity == 0) {
             this.status = ProductStatus.OUT_OF_STOCK;
         }
+        return true;
     }
 
     public void restoreStock(int quantity) {
