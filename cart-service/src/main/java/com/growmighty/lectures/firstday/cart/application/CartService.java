@@ -24,7 +24,7 @@ public class CartService {
             throw new IllegalStateException("현재 구매할 수 없는 상품입니다. productId=" + command.productId());
         }
         Cart cart = cartRepository.findByUserId(command.userId())
-                .orElseGet(() -> Cart.create(command.userId()));
+            .orElseGet(() -> Cart.create(command.userId()));
         cart.addItem(command.productId(), command.quantity());
         return CartView.from(cartRepository.save(cart));
     }
@@ -55,6 +55,7 @@ public class CartService {
 
     private Cart getCartEntity(Long userId) {
         return cartRepository.findByUserId(userId)
-                .orElseThrow(() -> new EntityNotFoundException("장바구니가 비어 있습니다. userId=" + userId));
+            .orElseThrow(() -> new EntityNotFoundException("장바구니가 비어 있습니다. userId=" + userId));
     }
+
 }
