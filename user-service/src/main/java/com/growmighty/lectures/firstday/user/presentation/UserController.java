@@ -1,10 +1,10 @@
-package com.growmighty.lectures.firstday.tangledmonolith.user.presentation;
+package com.growmighty.lectures.firstday.user.presentation;
 
-import com.growmighty.lectures.firstday.tangledmonolith.common.response.ApiResponse;
-import com.growmighty.lectures.firstday.tangledmonolith.user.application.UserService;
-import com.growmighty.lectures.firstday.tangledmonolith.user.presentation.dto.LoginRequest;
-import com.growmighty.lectures.firstday.tangledmonolith.user.presentation.dto.RegisterUserRequest;
-import com.growmighty.lectures.firstday.tangledmonolith.user.presentation.dto.UserResponse;
+import com.growmighty.lectures.firstday.common.response.ApiResponse;
+import com.growmighty.lectures.firstday.user.application.UserService;
+import com.growmighty.lectures.firstday.user.presentation.dto.LoginRequest;
+import com.growmighty.lectures.firstday.user.presentation.dto.RegisterUserRequest;
+import com.growmighty.lectures.firstday.user.presentation.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,5 +27,10 @@ public class UserController {
     @GetMapping("/{userId}")
     public ApiResponse<UserResponse> getUser(@PathVariable Long userId) {
         return ApiResponse.ok(UserResponse.from(userService.getUser(userId)));
+    }
+
+    @GetMapping("/health")
+    public ApiResponse<Void> health() {
+        return ApiResponse.ok();
     }
 }

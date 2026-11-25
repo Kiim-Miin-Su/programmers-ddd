@@ -1,7 +1,7 @@
-package com.growmighty.lectures.firstday.tangledmonolith.user.infrastructure;
+package com.growmighty.lectures.firstday.user.infrastructure;
 
-import com.growmighty.lectures.firstday.tangledmonolith.user.domain.User;
-import com.growmighty.lectures.firstday.tangledmonolith.user.domain.UserRepository;
+import com.growmighty.lectures.firstday.user.domain.User;
+import com.growmighty.lectures.firstday.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

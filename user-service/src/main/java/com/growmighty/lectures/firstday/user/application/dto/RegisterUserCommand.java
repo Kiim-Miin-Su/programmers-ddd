@@ -1,4 +1,4 @@
-package com.growmighty.lectures.firstday.tangledmonolith.user.application.dto;
+package com.growmighty.lectures.firstday.user.application.dto;
 
 public record RegisterUserCommand(
         String email,

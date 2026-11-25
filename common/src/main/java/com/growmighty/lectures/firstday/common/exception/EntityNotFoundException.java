@@ -1,4 +1,4 @@
-package com.growmighty.lectures.firstday.tangledmonolith.common.exception;
+package com.growmighty.lectures.firstday.common.exception;
 
 public class EntityNotFoundException extends BusinessException {
 

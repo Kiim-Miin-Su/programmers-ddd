@@ -1,6 +1,6 @@
-package com.growmighty.lectures.firstday.tangledmonolith.user.presentation.dto;
+package com.growmighty.lectures.firstday.user.presentation.dto;
 
-import com.growmighty.lectures.firstday.tangledmonolith.user.application.dto.RegisterUserCommand;
+import com.growmighty.lectures.firstday.user.application.dto.RegisterUserCommand;
 import lombok.NonNull;
 
 public record RegisterUserRequest(

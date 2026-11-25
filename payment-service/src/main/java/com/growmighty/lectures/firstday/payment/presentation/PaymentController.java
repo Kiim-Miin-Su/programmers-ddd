@@ -1,6 +1,6 @@
 package com.growmighty.lectures.firstday.payment.presentation;
 
-import com.growmighty.lectures.firstday.tangledmonolith.common.response.ApiResponse;
+import com.growmighty.lectures.firstday.common.response.ApiResponse;
 import com.growmighty.lectures.firstday.payment.application.PaymentService;
 import com.growmighty.lectures.firstday.payment.presentation.dto.PayRequest;
 import com.growmighty.lectures.firstday.payment.presentation.dto.PaymentResponse;

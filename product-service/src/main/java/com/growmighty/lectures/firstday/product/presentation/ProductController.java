@@ -5,7 +5,7 @@ import com.growmighty.lectures.firstday.product.presentation.dto.ChangeProductPr
 import com.growmighty.lectures.firstday.product.presentation.dto.ChangeStockRequest;
 import com.growmighty.lectures.firstday.product.presentation.dto.ProductResponse;
 import com.growmighty.lectures.firstday.product.presentation.dto.RegisterProductRequest;
-import com.growmighty.lectures.firstday.tangledmonolith.common.response.ApiResponse;
+import com.growmighty.lectures.firstday.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

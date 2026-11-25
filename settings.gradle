@@ -1,6 +1,9 @@
 rootProject.name = 'msa-example-project'
 
 include 'common'
-include 'product-service'
-include 'payment-service'
 include 'order-service'
+include 'payment-service'
+include 'product-service'
+include 'seller-service'
+include 'settlement-service'
+include 'user-service'

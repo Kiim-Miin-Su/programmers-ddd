@@ -4,7 +4,7 @@ import com.growmighty.lectures.firstday.product.application.dto.ProductInfo;
 import com.growmighty.lectures.firstday.product.application.dto.RegisterProductCommand;
 import com.growmighty.lectures.firstday.product.domain.Product;
 import com.growmighty.lectures.firstday.product.domain.ProductRepository;
-import com.growmighty.lectures.firstday.tangledmonolith.common.exception.EntityNotFoundException;
+import com.growmighty.lectures.firstday.common.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,11 +1,20 @@
 package com.growmighty.lectures.firstday.user.infrastructure;
 
-import com.growmighty.lectures.firstday.user.application.PasswordEncoder;
+import com.growmighty.lectures.firstday.user.application.UserPasswordEncoder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
-@Component
-public class SpringSecurityPasswordEncoder implements PasswordEncoder {
+@Configuration
+@EnableWebSecurity
+public class SpringSecurityUserPasswordEncoder implements UserPasswordEncoder {
     /*
     @Override
     public String encode(String rawPassword) {
@@ -24,9 +33,36 @@ public class SpringSecurityPasswordEncoder implements PasswordEncoder {
     }
      */
 
+    @Override
+    public String encode(String rawPassword) {
+        return this.passwordEncoder().encode(rawPassword);
+    }
+
+    @Override
+    public boolean matches(String rawPassword, String encodedPassword) {
+        return this.passwordEncoder().matches(rawPassword, encodedPassword);
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new SpringSecurityPasswordEncoder();
+        return new BCryptPasswordEncoder();
+    }
+
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(request -> request
+                .requestMatchers(HttpMethod.POST, "/users", "/users/login")
+                .permitAll()
+                .requestMatchers(HttpMethod.GET, "/users/health")
+                .permitAll()
+                .anyRequest().authenticated()
+            )
+            .httpBasic(Customizer.withDefaults());
+
+        http.csrf(AbstractHttpConfigurer::disable);
+        return http.build();
     }
 
 }

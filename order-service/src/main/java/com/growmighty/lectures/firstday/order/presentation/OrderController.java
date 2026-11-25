@@ -3,7 +3,7 @@ package com.growmighty.lectures.firstday.order.presentation;
 import com.growmighty.lectures.firstday.order.application.OrderApiService;
 import com.growmighty.lectures.firstday.order.presentation.dto.OrderResponse;
 import com.growmighty.lectures.firstday.order.presentation.dto.PlaceOrderRequest;
-import com.growmighty.lectures.firstday.tangledmonolith.common.response.ApiResponse;
+import com.growmighty.lectures.firstday.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

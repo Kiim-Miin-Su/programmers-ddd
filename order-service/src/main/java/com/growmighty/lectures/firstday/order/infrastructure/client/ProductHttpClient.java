@@ -7,8 +7,10 @@ import com.growmighty.lectures.firstday.order.infrastructure.client.dto.ProductA
 import com.growmighty.lectures.firstday.order.infrastructure.client.dto.StockChangeBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
 @Component
@@ -20,37 +22,41 @@ public class ProductHttpClient implements ProductPort {
     @Override
     public ProductSnapshot getProduct(Long productId) {
         ApiResponseBody<ProductApiData> body = orderRestClient.get()
-                .uri("/products/{productId}", productId)
-                .retrieve()
-                .body(new ParameterizedTypeReference<>() {
-                });
+            .uri("/products/{productId}", productId)
+            .retrieve()
+            .body(new ParameterizedTypeReference<>() {
+            });
+
+        if (body == null) {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "product not exists: %s".formatted(productId));
+        }
 
         ProductApiData data = body.data();
         return new ProductSnapshot(
-                data.id(),
-                data.name(),
-                data.price(),
-                data.stockQuantity(),
-                data.orderable());
+            data.id(),
+            data.name(),
+            data.price(),
+            data.stockQuantity(),
+            data.orderable());
     }
 
     @Override
     public void decreaseStock(Long productId, int quantity) {
         orderRestClient.post()
-                .uri("/products/{productId}/decrease-stock", productId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(new StockChangeBody(quantity))
-                .retrieve()
-                .toBodilessEntity();
+            .uri("/products/{productId}/decrease-stock", productId)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(new StockChangeBody(quantity))
+            .retrieve()
+            .toBodilessEntity();
     }
 
     @Override
-    public void restoreStock(Long productId, int quantity) {
+    public void restoreStock(Long productId, int quantity) { // 보상 로직
         orderRestClient.post()
-                .uri("/products/{productId}/restore-stock", productId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(new StockChangeBody(quantity))
-                .retrieve()
-                .toBodilessEntity();
+            .uri("/products/{productId}/restore-stock", productId)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(new StockChangeBody(quantity))
+            .retrieve()
+            .toBodilessEntity();
     }
 }

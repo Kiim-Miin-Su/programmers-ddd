@@ -1,6 +1,6 @@
-package com.growmighty.lectures.firstday.tangledmonolith.user.infrastructure;
+package com.growmighty.lectures.firstday.user.infrastructure;
 
-import com.growmighty.lectures.firstday.tangledmonolith.user.domain.User;
+import com.growmighty.lectures.firstday.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

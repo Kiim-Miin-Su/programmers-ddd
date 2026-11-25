@@ -10,13 +10,13 @@ public class OrderClientConfig {
 
     @Bean
     RestClient productRestClient(
-        @Value("${order.client.product-base-url:http://localhost:8081}") String baseUrl) {
+        @Value("${order.client.product-base-url:http://localhost:8082}") String baseUrl) { // application.properties:orElse
         return RestClient.builder().baseUrl(baseUrl).build();
     }
 
     @Bean
     RestClient paymentRestClient(
-        @Value("${order.client.payment-base-url:http://localhost:8082}") String baseUrl) {
+        @Value("${order.client.payment-base-url:http://localhost:8083}") String baseUrl) {
         return RestClient.builder().baseUrl(baseUrl).build();
     }
 }

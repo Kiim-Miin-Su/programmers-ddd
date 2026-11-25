@@ -8,5 +8,5 @@ public interface ProductPort {
 
     void decreaseStock(Long productId, int quantity);
 
-    void restoreStock(Long productId, int quantity);
+    void restoreStock(Long productId, int quantity); // 보상 로직
 }

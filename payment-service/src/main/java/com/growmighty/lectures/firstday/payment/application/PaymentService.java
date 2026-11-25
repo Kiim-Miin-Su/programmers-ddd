@@ -2,7 +2,7 @@ package com.growmighty.lectures.firstday.payment.application;
 
 import com.growmighty.lectures.firstday.payment.application.dto.PaymentInfo;
 import com.growmighty.lectures.firstday.payment.domain.Payment;
-import com.growmighty.lectures.firstday.tangledmonolith.common.exception.EntityNotFoundException;
+import com.growmighty.lectures.firstday.common.exception.EntityNotFoundException;
 import com.growmighty.lectures.firstday.payment.domain.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
