@@ -2,6 +2,7 @@ package com.growmighty.lectures.firstday.product.presentation;
 
 import com.growmighty.lectures.firstday.common.response.ApiResponse;
 import com.growmighty.lectures.firstday.product.application.ProductService;
+import com.growmighty.lectures.firstday.product.domain.exception.ProductErrorCode;
 import com.growmighty.lectures.firstday.product.presentation.dto.ChangeProductPriceRequest;
 import com.growmighty.lectures.firstday.product.presentation.dto.ChangeStockRequest;
 import com.growmighty.lectures.firstday.product.presentation.dto.ProductResponse;
@@ -40,7 +41,9 @@ public class ProductController {
 
     @PostMapping("/{productId}/decrease-stock")
     public ApiResponse<Void> decreaseStock(@PathVariable Long productId, @RequestBody ChangeStockRequest request) {
-        productService.decreaseStock(productId, request.quantity());
+        if (productService.decreaseStock(productId, request.quantity()))
+            ApiResponse.fail(new ApiResponse.ApiError(ProductErrorCode.NOT_ENOUGH_STOCK.getCode(), ProductErrorCode.NOT_ENOUGH_STOCK.getMessage()));
+
         return ApiResponse.ok();
     }
 

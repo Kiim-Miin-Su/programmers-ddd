@@ -34,8 +34,8 @@ public class ProductService {
     }
 
     @Transactional
-    public void decreaseStock(Long productId, int quantity) {
-        getProductEntity(productId).decreaseStock(quantity);
+    public boolean decreaseStock(Long productId, int quantity) {
+        return getProductEntity(productId).decreaseStock(quantity);
     }
 
     @Transactional
