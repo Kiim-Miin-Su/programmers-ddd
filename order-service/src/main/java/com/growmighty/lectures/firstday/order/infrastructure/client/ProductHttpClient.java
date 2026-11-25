@@ -30,7 +30,7 @@ public class ProductHttpClient implements ProductPort {
         if (body == null) {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "product not exists: %s".formatted(productId));
         }
-
+        
         ProductApiData data = body.data();
         return new ProductSnapshot(
             data.id(),

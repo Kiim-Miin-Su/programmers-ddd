@@ -1,15 +1,17 @@
 package com.growmighty.lectures.firstday.order.application;
 
+import com.growmighty.lectures.firstday.common.exception.EntityNotFoundException;
 import com.growmighty.lectures.firstday.order.application.dto.OrderConsistencyView;
 import com.growmighty.lectures.firstday.order.application.dto.OrderLine;
 import com.growmighty.lectures.firstday.order.application.dto.OrderResult;
 import com.growmighty.lectures.firstday.order.application.dto.PlaceOrderCommand;
+import com.growmighty.lectures.firstday.order.application.exception.NotOrderableException;
+import com.growmighty.lectures.firstday.order.application.port.dto.ProductSnapshot;
 import com.growmighty.lectures.firstday.order.domain.Money;
 import com.growmighty.lectures.firstday.order.domain.Order;
 import com.growmighty.lectures.firstday.order.domain.OrderItem;
 import com.growmighty.lectures.firstday.order.domain.OrderRepository;
-import com.growmighty.lectures.firstday.common.exception.EntityNotFoundException;
-import com.growmighty.lectures.firstday.order.presentation.dto.UserInfo;
+import com.growmighty.lectures.firstday.order.infrastructure.client.ProductHttpClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +24,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final ProductHttpClient productHttpClient;
 
     @Transactional
     public OrderResult placeOrder(PlaceOrderCommand command) {
-        UserInfo userInfo = userService.getUser(command.userId());
+        // TODO: get user response -> info
+//        UserInfo userInfo = userService.getUser(command.userId());
+        Long userId = command.userId();
+
+        // TODO: get product with product ID -> build order-line list
 
         List<OrderLine> lines = command.lines();
         if (lines == null || lines.isEmpty()) {
@@ -34,7 +41,11 @@ public class OrderService {
 
         List<OrderItem> orderItems = new ArrayList<>();
         for (OrderLine line : lines) {
-            ProductInfo product = productService.getProductInfo(line.productId());
+//            ProductInfo product = productService.getProductInfo(line.productId());
+            ProductSnapshot product = this.productHttpClient.getProduct(line.productId());
+
+            if (!product.orderable())
+                throw new NotOrderableException();
 
             orderItems.add(OrderItem.create(product.name(), product.price(), product.id(), line.quantity()));
 
