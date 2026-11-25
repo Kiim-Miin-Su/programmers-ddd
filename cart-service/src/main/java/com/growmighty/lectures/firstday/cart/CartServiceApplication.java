@@ -1,4 +1,4 @@
-package com.growmighty.lectures.firstday.cart.presentation;
+package com.growmighty.lectures.firstday.cart;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
