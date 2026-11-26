@@ -7,7 +7,7 @@ spring:
         webflux:
           routes:
             - id: order-route
-              uri: lb://order-service
+              uri: lb://order-service # lb:// = @LoadBalanced에게 주입받겠다. (http로 날리면 응답 없음)
               predicates:
                 - Path=/orders/**
 
@@ -37,6 +37,7 @@ management:
         include: gateway
 
 # 전화번호부의 위치 — 게이트웨이도 여기서 명부 사본을 받아온다 (최상위 레벨에 추가)
+# build.gradle에 eureka 의존성 추가.
 eureka:
   client:
     service-url:
