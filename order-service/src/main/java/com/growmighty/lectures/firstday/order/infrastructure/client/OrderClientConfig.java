@@ -42,10 +42,4 @@ public class OrderClientConfig {
         @Value("${order.client.payment-base-url:http://payment-service}") String baseUrl) {
         return builder.clone().baseUrl(baseUrl).build();
     }
-
-    @Bean
-    RestClient userRestClient(
-        @Value("${order.client.user-base-url:http://localhost:8081}") String baseUrl) {
-        return RestClient.builder().baseUrl(baseUrl).build();
-    }
 }
