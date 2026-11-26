@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: order-route
+              uri: lb://order-service
+              predicates:
+                - Path=/orders/**
+
+            # 라우트 2: 상품
+            - id: product-route
+              uri: lb://product-service
+              predicates:
+                - Path=/products/**
+
+            # 라우트 3: 결제
+            - id: payment-route
+              uri: lb://payment-service
+              predicates:
+                - Path=/payments/**
+
+# 라우팅 테이블 확인용 액추에이터 엔드포인트
+server:
+  port: 8080
+
+management:
+  endpoint: # (단수) 개별 엔드포인트의 설정
+    gateway:
+      access: read-only   # SCG 5.0 부터 gateway 엔드포인트는 기본 차단 — 조회 전용으로 연다
+  endpoints: # (복수) 엔드포인트 노출 설정
+    web:
+      exposure:
+        include: gateway
+
+# 전화번호부의 위치 — 게이트웨이도 여기서 명부 사본을 받아온다 (최상위 레벨에 추가)
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka   # defaultZone 은 맵의 키라서 camelCase 그대로 적는다!

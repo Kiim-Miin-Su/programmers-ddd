@@ -1,10 +1,4 @@
-<<<<<<<< HEAD:order-service/src/main/java/com/growmighty/lectures/firstday/order/domain/Order.java
 package com.growmighty.lectures.firstday.order.domain;
-|||||||| parent of f914e54 (Step4: 도메인별 DDD 4계층 분리 + DIP 적용):src/main/java/com/growmighty/lectures/firstday/tangledmonolith/order/Order.java
-package com.growmighty.lectures.firstday.tangledmonolith.order;
-========
-package com.growmighty.lectures.firstday.tangledmonolith.order.domain;
->>>>>>>> f914e54 (Step4: 도메인별 DDD 4계층 분리 + DIP 적용):src/main/java/com/growmighty/lectures/firstday/tangledmonolith/order/domain/Order.java
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -81,22 +75,22 @@ public class Order {
 
     private void recalculateAmounts() {
         this.itemsAmount = items.stream()
-                .map(OrderItem::subtotal)
-                .reduce(Money.zero(), Money::plus);
+            .map(OrderItem::subtotal)
+            .reduce(Money.zero(), Money::plus);
         this.shippingFee = calculateShippingFee(this.itemsAmount);
         this.totalAmount = this.itemsAmount.plus(this.shippingFee);
     }
 
     private Money calculateShippingFee(Money itemsAmount) {
         return itemsAmount.isGreaterThanOrEqual(FREE_SHIPPING_THRESHOLD)
-                ? Money.zero()
-                : BASE_SHIPPING_FEE;
+            ? Money.zero()
+            : BASE_SHIPPING_FEE;
     }
 
     public Money recalculatedTotal() {
         Money items = this.items.stream()
-                .map(OrderItem::subtotal)
-                .reduce(Money.zero(), Money::plus);
+            .map(OrderItem::subtotal)
+            .reduce(Money.zero(), Money::plus);
         return items.plus(calculateShippingFee(items));
     }
 
@@ -127,8 +121,8 @@ public class Order {
 
     private OrderItem findItem(Long orderItemId) {
         return items.stream()
-                .filter(e -> e.getId().equals(orderItemId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("주문에 없는 항목입니다."));
+            .filter(e -> e.getId().equals(orderItemId))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("주문에 없는 항목입니다."));
     }
 }
